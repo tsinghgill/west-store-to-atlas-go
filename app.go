@@ -63,12 +63,12 @@ func (f Anonymize) Process(stream []turbine.Record) []turbine.Record {
 		log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
 		log.Printf("Payload: \n%s\n", record.Payload)        // Logging the payload
 
-		// log.Printf("Setting StoreID")
-		// err := record.Payload.Set("after.storeId", "001")
-		// if err != nil {
-		// 	log.Println("error setting value: ", err)
-		// 	continue
-		// }
+		log.Printf("Setting StoreID")
+		err := record.Payload.Set("storeId", "001")
+		if err != nil {
+			log.Println("error setting value: ", err)
+			continue
+		}
 
 		stream[i] = record
 	}
