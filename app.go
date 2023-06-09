@@ -40,9 +40,9 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
-	err = dest.WriteWithConfig(res, "dispensedpillsall", []turbine.ConnectionOption{
-		turbine.ConnectionOption{Field: "transforms", Value: "unwrap"},
-		turbine.ConnectionOption{Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
+	err = dest.WriteWithConfig(res, "medicine_from_west_store_go", turbine.ConnectionOptions{
+		{Field: "transforms", Value: "unwrap"},
+		{Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
 	})
 	if err != nil {
 		return err
