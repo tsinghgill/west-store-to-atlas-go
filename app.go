@@ -1,8 +1,6 @@
 package main
 
 import (
-	// Dependencies of the example data app
-
 	"context"
 	"log"
 
@@ -44,9 +42,7 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
-	err = dest.WriteWithConfig(res, "medicinefromweststorego", turbine.ConnectionOptions{
-		// {Field: "transforms", Value: "unwrap"},
-		// {Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
+	err = dest.WriteWithConfig(res, "aggregated_medicine", turbine.ConnectionOptions{
 		{Field: "max.batch.size", Value: "1"},
 	})
 	if err != nil {
@@ -60,8 +56,8 @@ type Anonymize struct{}
 
 func (f Anonymize) Process(stream []turbine.Record) []turbine.Record {
 	for i, record := range stream {
-		log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
-		log.Printf("Payload: \n%s\n", record.Payload)        // Logging the payload
+		// log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
+		log.Printf("Payload: \n%s\n", record.Payload) // Logging the payload
 
 		log.Printf("Setting StoreID")
 		err := record.Payload.Set("storeId", "001")
