@@ -41,8 +41,8 @@ func (a App) Run(v turbine.Turbine) error {
 	}
 
 	err = dest.WriteWithConfig(res, "medicinefromweststorego", turbine.ConnectionOptions{
-		{Field: "transforms", Value: "unwrap"},
-		{Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
+		// {Field: "transforms", Value: "unwrap"},
+		// {Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
 		{Field: "max.batch.size", Value: "1"},
 	})
 	if err != nil {
@@ -59,12 +59,12 @@ func (f Anonymize) Process(stream []turbine.Record) []turbine.Record {
 		log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
 		log.Printf("Payload: \n%s\n", record.Payload)        // Logging the payload
 
-		log.Printf("Setting StoreID")
-		err := record.Payload.Set("after.storeId", "001")
-		if err != nil {
-			log.Println("error setting value: ", err)
-			continue
-		}
+		// log.Printf("Setting StoreID")
+		// err := record.Payload.Set("after.storeId", "001")
+		// if err != nil {
+		// 	log.Println("error setting value: ", err)
+		// 	continue
+		// }
 
 		stream[i] = record
 	}
