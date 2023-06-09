@@ -1,0 +1,8 @@
+{
+  "name": "west-store-to-atlas-go",
+  "language": "golang",
+  "environment": "common",
+  "resources": {
+    "source_name": "fixtures/demo-cdc.json"
+  }
+}
