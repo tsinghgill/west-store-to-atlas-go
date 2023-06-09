@@ -43,6 +43,7 @@ func (a App) Run(v turbine.Turbine) error {
 	err = dest.WriteWithConfig(res, "medicinefromweststorego", turbine.ConnectionOptions{
 		{Field: "transforms", Value: "unwrap"},
 		{Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
+		{Field: "max.batch.size", Value: "1"},
 	})
 	if err != nil {
 		return err
