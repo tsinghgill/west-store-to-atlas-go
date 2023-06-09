@@ -35,7 +35,7 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
-	dest, err := v.Resources("mongo-atlas")
+	dest, err := v.Resources("meroxa-atlas")
 	if err != nil {
 		return err
 	}
