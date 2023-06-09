@@ -1,3 +1,6 @@
+// check source, drop records that arent matching this apps.
+// Add config for id in destination
+
 package main
 
 import (
@@ -44,6 +47,7 @@ func (a App) Run(v turbine.Turbine) error {
 
 	err = dest.WriteWithConfig(res, "aggregated_medicine", turbine.ConnectionOptions{
 		{Field: "max.batch.size", Value: "1"},
+		{Field: "writemodel.strategy"},
 	})
 	if err != nil {
 		return err
@@ -54,19 +58,49 @@ func (a App) Run(v turbine.Turbine) error {
 
 type Anonymize struct{}
 
+// func (f Anonymize) Process(stream []turbine.Record) []turbine.Record {
+// 	for i, record := range stream {
+// 		// log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
+// 		log.Printf("Payload: \n%s\n", record.Payload) // Logging the payload
+
+// 		log.Printf("Setting StoreID for West Store to 001")
+// 		err := record.Payload.Set("storeId", "001")
+// 		if err != nil {
+// 			log.Println("error setting value: ", err)
+// 			continue
+// 		}
+
+// 		stream[i] = record
+// 	}
+// 	return stream
+// }
+
 func (f Anonymize) Process(stream []turbine.Record) []turbine.Record {
-	for i, record := range stream {
+	processedStream := make([]turbine.Record, 0)
+
+	for _, record := range stream {
 		// log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
 		log.Printf("Payload: \n%s\n", record.Payload) // Logging the payload
 
-		log.Printf("Setting StoreID")
-		err := record.Payload.Set("storeId", "001")
-		if err != nil {
-			log.Println("error setting value: ", err)
+		source := record.Payload.Get("source")
+		if source == nil {
+			log.Printf("Error getting source: %v", source)
 			continue
 		}
 
-		stream[i] = record
+		if source == "west-store-mongo" {
+			log.Printf("Setting storeId for West Store to 001")
+			err := record.Payload.Set("storeId", "001")
+			if err != nil {
+				log.Println("error setting value: ", err)
+				continue
+			}
+
+			processedStream = append(processedStream, record)
+		} else {
+			log.Printf("Dropping record with source: %s", source)
+		}
 	}
-	return stream
+
+	return processedStream
 }
