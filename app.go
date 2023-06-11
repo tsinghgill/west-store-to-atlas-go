@@ -40,7 +40,7 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
-	dest, err := v.Resources("mongo-atlas")
+	dest, err := v.Resources("atlas-mongo")
 	if err != nil {
 		return err
 	}
