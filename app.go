@@ -40,7 +40,7 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
-	dest, err := v.Resources("meroxa-atlas")
+	dest, err := v.Resources("mongo-atlas")
 	if err != nil {
 		return err
 	}
@@ -56,23 +56,6 @@ func (a App) Run(v turbine.Turbine) error {
 }
 
 type ProcessStoreData struct{}
-
-// func (f ProcessStoreData) Process(stream []turbine.Record) []turbine.Record {
-// 	for i, record := range stream {
-// 		// log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
-// 		log.Printf("Payload: \n%s\n", record.Payload) // Logging the payload
-
-// 		log.Printf("Setting StoreID for West Store to 001")
-// 		err := record.Payload.Set("storeId", "001")
-// 		if err != nil {
-// 			log.Println("error setting value: ", err)
-// 			continue
-// 		}
-
-// 		stream[i] = record
-// 	}
-// 	return stream
-// }
 
 func (f ProcessStoreData) Process(stream []turbine.Record) []turbine.Record {
 	processedStream := make([]turbine.Record, 0)
