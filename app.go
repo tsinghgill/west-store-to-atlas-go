@@ -35,7 +35,7 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
-	res, err := v.Process(rr, Anonymize{})
+	res, err := v.Process(rr, ProcessStoreData{})
 	if err != nil {
 		return err
 	}
@@ -56,9 +56,9 @@ func (a App) Run(v turbine.Turbine) error {
 	return nil
 }
 
-type Anonymize struct{}
+type ProcessStoreData struct{}
 
-// func (f Anonymize) Process(stream []turbine.Record) []turbine.Record {
+// func (f ProcessStoreData) Process(stream []turbine.Record) []turbine.Record {
 // 	for i, record := range stream {
 // 		// log.Printf("Processing record %d: %+v\n", i, record) // Logging the record details
 // 		log.Printf("Payload: \n%s\n", record.Payload) // Logging the payload
@@ -75,7 +75,7 @@ type Anonymize struct{}
 // 	return stream
 // }
 
-func (f Anonymize) Process(stream []turbine.Record) []turbine.Record {
+func (f ProcessStoreData) Process(stream []turbine.Record) []turbine.Record {
 	processedStream := make([]turbine.Record, 0)
 
 	for _, record := range stream {
