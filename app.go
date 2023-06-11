@@ -47,10 +47,6 @@ func (a App) Run(v turbine.Turbine) error {
 
 	err = dest.WriteWithConfig(res, "aggregated_medicine", turbine.ConnectionOptions{
 		{Field: "max.batch.size", Value: "1"},
-		{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
-		{Field: "document.id.strategy.partial.value.projection.list", Value: "_id"},
-		{Field: "document.id.strategy.partial.value.projection.type", Value: "AllowList"},
-		{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
 	})
 	if err != nil {
 		return err
