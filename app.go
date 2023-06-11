@@ -1,6 +1,3 @@
-// check source, drop records that arent matching this apps.
-// Add config for id in destination
-
 package main
 
 import (
@@ -45,8 +42,22 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
+	// Using pillName & patient_id as unique identifier
+	// err = dest.WriteWithConfig(res, "medicine", turbine.ConnectionOptions{
+	// 	{Field: "max.batch.size", Value: "1"},
+	// 	{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
+	// 	{Field: "document.id.strategy.partial.value.projection.list", Value: "pillName,patient_id"},
+	// 	{Field: "document.id.strategy.partial.value.projection.type", Value: "AllowList"},
+	// 	{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
+	// })
+
+	// Using mongo object id as unique identifier
 	err = dest.WriteWithConfig(res, "aggregated_medicine", turbine.ConnectionOptions{
 		{Field: "max.batch.size", Value: "1"},
+		{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
+		{Field: "document.id.strategy.partial.value.projection.list", Value: "id"}, //TODO: Changed value from _id to id since at the destination it will have its own new _id and the sources _id will become id
+		{Field: "document.id.strategy.partial.value.projection.type", Value: "AllowList"},
+		{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
 	})
 	if err != nil {
 		return err
@@ -65,6 +76,7 @@ func (f ProcessStoreData) Process(stream []turbine.Record) []turbine.Record {
 		log.Printf("Payload: \n%s\n", record.Payload) // Logging the payload
 
 		source := record.Payload.Get("source")
+		log.Printf("source value: %v", source)
 		if source == nil {
 			log.Printf("Error getting source: %v", source)
 			continue
