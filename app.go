@@ -25,8 +25,8 @@ func (a App) Run(v turbine.Turbine) error {
 	}
 
 	rr, err := source.RecordsWithContext(context.Background(), "medicine", turbine.ConnectionOptions{
-		{Field: "transforms", Value: "unwrap"},
-		{Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
+		// {Field: "transforms", Value: "unwrap"},
+		// {Field: "transforms.unwrap.type", Value: "io.debezium.connector.mongodb.transforms.ExtractNewDocumentState"},
 	})
 	if err != nil {
 		return err
