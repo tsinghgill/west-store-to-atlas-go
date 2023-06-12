@@ -42,44 +42,6 @@ func (a App) Run(v turbine.Turbine) error {
 		return err
 	}
 
-	// Using pillName & patient_id as unique identifier
-	// err = dest.WriteWithConfig(res, "medicine", turbine.ConnectionOptions{
-	// 	{Field: "max.batch.size", Value: "1"},
-	// 	{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
-	// 	{Field: "document.id.strategy.partial.value.projection.list", Value: "pillName,patient_id"},
-	// 	{Field: "document.id.strategy.partial.value.projection.type", Value: "AllowList"},
-	// 	{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
-	// })
-
-	// ReplaceOneBusinessKeyStrategy will keep overriting records since it cant match on Business Key ("after.patient_id")
-	// err = dest.WriteWithConfig(res, "aggregated", turbine.ConnectionOptions{
-	// 	{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
-	// 	{Field: "document.id.strategy.partial.value.projection.list", Value: "after.patient_id"},
-	// 	{Field: "document.id.strategy.partial.value.projection.type", Value: "AllowList"},
-	// 	{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
-	// })
-
-	// ReplaceOneBusinessKeyStrategy will keep overriting records since it cant match on Business Key (`${after.patient_id}`)
-	// err = dest.WriteWithConfig(res, "aggregated", turbine.ConnectionOptions{
-	// 	{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
-	// 	{Field: "document.id.strategy.partial.value.projection.list", Value: `${after.patient_id}`},
-	// 	{Field: "document.id.strategy.partial.value.projection.type", Value: "AllowList"},
-	// 	{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
-	// })
-
-	// ReplaceOneBusinessKeyStrategy will keep overriting records since it cant match on Business Key ("${after.patient_id}")
-	// err = dest.WriteWithConfig(res, "aggregated", turbine.ConnectionOptions{
-	// 	{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
-	// 	{Field: "document.id.strategy.partial.value.projection.list", Value: "${after.patient_id}"},
-	// 	{Field: "document.id.strategy.partial.value.projection.type", Value: "AllowList"},
-	// 	{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
-	// })
-
-	// RESOURCES:
-	// https://stackoverflow.com/questions/59083430/kafka-mongodb-sink-connector-update-document
-	// https://github.com/hpgrahsl/kafka-connect-mongodb#use-case-1-employing-business-keys
-
-	// Using mongo object id as unique identifier
 	err = dest.WriteWithConfig(res, "aggregated_medicine", turbine.ConnectionOptions{
 		{Field: "max.batch.size", Value: "1"},
 		{Field: "document.id.strategy", Value: "com.mongodb.kafka.connect.sink.processor.id.strategy.PartialValueStrategy"},
