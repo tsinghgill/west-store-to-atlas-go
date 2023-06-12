@@ -75,6 +75,10 @@ func (a App) Run(v turbine.Turbine) error {
 	// 	{Field: "writemodel.strategy", Value: "com.mongodb.kafka.connect.sink.writemodel.strategy.ReplaceOneBusinessKeyStrategy"},
 	// })
 
+	// RESOURCES:
+	// https://stackoverflow.com/questions/59083430/kafka-mongodb-sink-connector-update-document
+	// https://github.com/hpgrahsl/kafka-connect-mongodb#use-case-1-employing-business-keys
+
 	// Using mongo object id as unique identifier
 	err = dest.WriteWithConfig(res, "aggregated_medicine", turbine.ConnectionOptions{
 		{Field: "max.batch.size", Value: "1"},
