@@ -80,4 +80,4 @@ db.medicine.insert({pillName: 'Lyrica', quantityDispensed: 350, patient_id: "12"
 db.medicine.insert({pillName: 'Prilosec', quantityDispensed: 150, patient_id: "13", order_id: "13", dispensedAt: new Date()});
 db.medicine.insert({pillName: 'Zocor', quantityDispensed: 100, patient_id: "14", order_id: "14", dispensedAt: new Date()});
 db.medicine.insert({pillName: 'Prozac', quantityDispensed: 200, patient_id: "15", order_id: "15", dispensedAt: new Date()});
-db.medicine.insert({pillName: 'TEST', quantityDispensed: 200, patient_id: "22", order_id: "22", dispensedAt: new Date()});
+db.medicine.insert({pillName: 'TEST', quantityDispensed: 200, patient_id: "22", order_id: "22", dispensedAt: new Date(), source: "atlas"});
